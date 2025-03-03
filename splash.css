@@ -1,0 +1,48 @@
+.splash{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height: 100vh;
+  background: #474f7a;
+  z-index: 200;
+  color: #FFD0EC;
+  text-align: center;
+  line-height: 90vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash.display-none{
+  position: fixed;
+  opacity: 0;
+  top:0;
+  left:0;
+  width:100%;
+  height: 100vh;
+  background: #474f7a;
+  z-index: -10;
+  color: #FFD0EC;
+  text-align: center;
+  line-height: 90vh;
+  transition: all 0.5s;
+  align-items: center;
+  justify-content: center;
+}
+
+.header{
+  text-align: center;
+  justify-content: center;
+}
+
+
+@keyframes fadeIn{
+  to{
+    opacity: 1;
+  }
+}
+
+.fade-in{
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+}
