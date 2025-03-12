@@ -15,6 +15,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Milky Way</title>
 </head>
+
 <body class="header" style="background-color: #474F7A;">
   <div class="splash">
     <!-- rocket ship icon from https://www.svgrepo.com/svg/214631/rocket-ship-rocket?edit=true -->
@@ -43,9 +44,11 @@
   <header><h1 style="color:#ffd0ec;">Get ready for takeoff...</h1></header>
   
   <!-- <button type="button" onclick="alert('Hello world!')">Get Started!</button> -->
-  <button id="startButton" onclick="openLanding()">Get Started!</button>
+  <!-- <button id="startButton" onclick="openLanding()">Get Started!</button> -->
+  <button class="main__btn"><a href="landing.html">Get Started!</a></button>
+  <!-- open landing page -->
 
-  <script>
+  <!-- <script>
     function openLanding() {
       // remove "get started" button
       document.getElementById('startButton').remove();
@@ -66,7 +69,7 @@
       };
       document.body.appendChild(newButton);
     }
-  </script>
+  </script> -->
   
   <script src="app.js"></script>
 </body>
