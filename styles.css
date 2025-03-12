@@ -282,8 +282,9 @@
 }
 
 
+/* try to move this button under the main__btn */
 .savedworkspaces__btn {
-    font-size: 1rem;
+    font-size: 0.8rem;
     background-image: linear-gradient(to top, #ffd0ec 0%, #ffd0ec 100%);
     padding: 14px 32px;
     border: none;
@@ -322,10 +323,13 @@
 
 .main__img-container {
     text-align: center;
+    border: 5px solid #ffd0ec;
 }
 #main__img {
     height: 80%;
     width: 80%;
+    border: 5px solid #ffd0ec; 
+    border-radius: 20px;
 }
 
 /* mobile responsive */
