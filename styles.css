@@ -249,7 +249,7 @@
     background-image: linear-gradient(to top, #ffd0ec 0%, #ffd0ec 100%);
     padding: 14px 32px;
     border: none;
-    border-radius: 4px;
+    border-radius: 20px;
     color: #1f2544;
     margin-top: 2rem;
     cursor: pointer;
@@ -284,11 +284,11 @@
 
 /* try to move this button under the main__btn */
 .savedworkspaces__btn {
-    font-size: 0.8rem;
+    font-size: 1rem;
     background-image: linear-gradient(to top, #ffd0ec 0%, #ffd0ec 100%);
     padding: 14px 32px;
     border: none;
-    border-radius: 4px;
+    border-radius: 20px;
     color: #1f2544;
     margin-top: 2rem;
     cursor: pointer;
