@@ -104,6 +104,8 @@
     transition: all 0.3s ease;
 }
 
+
+/* DOES NOT WORK WELL YET */
 /*mobile rsponsive / tablet responisve part*/
 @media screen and (max-width: 960px) {
     .navbar__container {
@@ -333,6 +335,7 @@
     border-radius: 20px;
 }
 
+/* DOES NOT WORK WELL YET */
 /* mobile responsive */
 @media screen and (max-width: 768px) {
     .main__container {
