@@ -16,12 +16,10 @@ window.onscroll = function(){
     }else{
         header.classList.remove('active');
     }
+}
 
-// //identify what is being changed
-// const name = document.querySelector(".header");
-
-// function openLanding() {
-//     header.style.color = "FFD0EC";
-// }
-
+// registration page
+function showForm(formId) {
+    document.querySelectorAll(".form-box").forEach(form => form.classList.remove("active"));
+    document.getElementById(formId).classList.add("active");
 }

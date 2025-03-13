@@ -55,6 +55,7 @@
   font-family: "Inclusive Sans", serif;
   align-items: center;
   justify-self: center;
+  /* min-height: 100vh; */
 }
 
 .splash__btn {
@@ -78,7 +79,7 @@
   color: #1f2544;
   text-decoration: none;
 }
-.splash__btn:after {
+/* .splash__btn:after {
   position: absolute;
   content: '';
   top: 0;
@@ -94,4 +95,14 @@
 }
 .splash__btn:hover:after {
   width: 100%;
+} */
+
+
+.splash__btn:hover {
+  background: #1f2544;
+  color: #ffd0ec;
+  transition: all 0.3s ease;
+}
+.splash__btn:hover a {
+  color: #ffd0ec;
 }
