@@ -47,3 +47,51 @@
   opacity: 0;
   animation: fadeIn 1s ease-in forwards;
 }
+
+/* how to put everything in the middle of the screen */
+
+.splash__content h1 {
+  color: #ffd0ec;
+  font-family: "Inclusive Sans", serif;
+  align-items: center;
+  justify-self: center;
+}
+
+.splash__btn {
+  font-size: 1rem;
+  background-image: linear-gradient(to top, #ffd0ec 0%, #ffd0ec 100%);
+  padding: 14px 32px;
+  border: none;
+  border-radius: 20px;
+  color: #1f2544;
+  margin-top: 2rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.35s;
+  outline: none;
+  align-items: center;
+  justify-self: center;
+}
+.splash__btn a {
+  position: relative;
+  z-index: 2;
+  color: #1f2544;
+  text-decoration: none;
+}
+.splash__btn:after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #81689d;
+  transition: all 0.35s;
+  border-radius: 20px;
+}
+.splash__btn:hover {
+  color: #fff;
+}
+.splash__btn:hover:after {
+  width: 100%;
+}
