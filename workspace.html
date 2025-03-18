@@ -11,15 +11,107 @@
     }
   </style>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Milky Way</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; }
+    .toolbar { padding: 10px; background: #f4f4f4; display: flex; gap: 10px; }
+    .workspace { width: 100vw; height: 90vh; border: 1px solid #ddd; position: relative; overflow: hidden; }
+    .element { position: absolute; cursor: grab; padding: 10px; border-radius: 5px; }
+    .text { background: lightblue; }
+    .shape { background: lightgreen; width: 50px; height: 50px; }
+    .timer { background: lightcoral; }
+  </style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Milky Way</title>
 </head>
 
 <body>
+  <div class="toolbar">
+      <button onclick="addElement('text')">Add Text</button>
+      <button onclick="addElement('shape')">Add Shape</button>
+      <button onclick="addElement('timer')">Add Timer</button>
+      <button onclick="saveWorkspace()">Save</button>
+      <button onclick="loadWorkspace()">Load</button>
+  </div>
 
+  <div class="workspace" id="workspace"></div>
+  <script>
+      let workspace = document.getElementById("workspace");
+      
+      function addElement(type, top = "50px", left = "50px", content = "") {
+          let element = document.createElement("div");
+          element.classList.add("element", type);
+          element.style.top = top;
+          element.style.left = left;
+          element.draggable = true;
+          
+          if (type === "text") {
+              element.innerText = content || "Text Element";
+              element.contentEditable = true;
+          } else if (type === "shape") {
+              element.style.width = "50px";
+              element.style.height = "50px";
+          } else if (type === "timer") {
+              element.innerText = content || "00:00";
+              element.onclick = () => startTimer(element);
+          }
+          
+          element.addEventListener("dragstart", dragStart);
+          element.addEventListener("dragend", dragEnd);
+          workspace.appendChild(element);
+      }
+      
+      function dragStart(event) {
+          event.target.style.opacity = 0.5;
+          event.dataTransfer.setData("text/plain", null);
+          let element = event.target;
+          
+          document.onmousemove = function (e) {
+              element.style.left = e.pageX - 25 + "px";
+              element.style.top = e.pageY - 25 + "px";
+          };
+      }
+      
+      function dragEnd(event) {
+          event.target.style.opacity = 1;
+          document.onmousemove = null;
+      }
+      
+      function startTimer(element) {
+          let seconds = 0;
+          setInterval(() => {
+              seconds++;
+              let mins = Math.floor(seconds / 60);
+              let secs = seconds % 60;
+              element.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+          }, 1000);
+      }
 
-    
-  <script src="app.js"></script>
+      function saveWorkspace() {
+          let elements = document.querySelectorAll(".element");
+          let data = [];
+          elements.forEach(el => {
+              data.push({
+                  type: el.classList[1],
+                  top: el.style.top,
+                  left: el.style.left,
+                  content: el.innerText
+              });
+          });
+          localStorage.setItem("workspaceData", JSON.stringify(data));
+          alert("Workspace saved!");
+      }
+
+      function loadWorkspace() {
+          workspace.innerHTML = ""; // Clear existing elements
+          let data = JSON.parse(localStorage.getItem("workspaceData")) || [];
+          data.forEach(item => {
+              addElement(item.type, item.top, item.left, item.content);
+          });
+      }
+  </script>
+
+<script src="app.js"></script>
 </body>
 </html>
