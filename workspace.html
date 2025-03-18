@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="workspace.css"> <!-- adding css file -->
-  <script src="https://kit.fontawesome.com/3f153ad2ee.js" crossorigin="anonymous"></script> <!-- adding icons kit -->
+  <link rel="stylesheet" href="workspace.css">
+  <script src="https://kit.fontawesome.com/3f153ad2ee.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&display=swap">
   <style>
     body{
       font-family: "Inclusive Sans", serif;
     }
   </style>
-
 
   <style>
     body { font-family: Arial, sans-serif; margin: 0; }
@@ -20,10 +19,7 @@
     .text { background: lightblue; }
     .shape { background: lightgreen; width: 50px; height: 50px; }
     .timer { background: lightcoral; }
-</style>
-
-
-
+  </style>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -31,9 +27,6 @@
 </head>
 
 <body>
-
-
-
     <div class="toolbar">
         <button onclick="addElement('text')">Add Text</button>
         <button onclick="addElement('shape')">Add Shape</button>
@@ -111,18 +104,14 @@
         }
 
         function loadWorkspace() {
-            workspace.innerHTML = ""; // Clear existing elements
+            workspace.innerHTML = "";
             let data = JSON.parse(localStorage.getItem("workspaceData")) || [];
             data.forEach(item => {
                 addElement(item.type, item.top, item.left, item.content);
             });
         }
     </script>
-
     
-
-
-
   <script src="app.js"></script>
 </body>
 </html>

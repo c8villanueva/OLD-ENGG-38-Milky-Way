@@ -3,7 +3,6 @@
     margin: 0;
     padding: 0;
     font-family: "Inclusive Sans", serif;
-    /* background-color: #474f7a; */
 }
 
 .navbar{
@@ -15,7 +14,7 @@
     font-size: 1.2rem;
     position: sticky;
     top: 0;
-    z-index: 999; /*high number to ensure that the navbar is always on top even when scrolling*/
+    z-index: 999;
 }
 
 .navbar__container{
@@ -25,23 +24,19 @@
     z-index: 1;
     width: 100%;
     max-width: 1300px;
-    margin: 0 auto; /*first number = top and bottom, second number = right and left*/
+    margin: 0 auto;
     padding: 0 50px;
 }
- /*navbar__logo is an id, so use #*/
 #navbar__logo{
     background-color: #ffd0ec;
-    /* background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%); */
     background-size: 100%;
-    /*clips the gradient to the text*/
     -webkit-background-clip: text;
     -moz-background-clip: text;
     -webkit-text-fill-color: transparent;
     -moz-text-fill-color: transparent;
-
     display: flex;
     align-items: center;
-    cursor: pointer; /*hand symbol when hovering*/
+    cursor: pointer;
     text-decoration: none;
     font-size: 2rem;
 }
@@ -93,113 +88,15 @@
     background: #ffd0ec;
     color: #1f2544;
 }
-
 .button:hover {
     background: #474f7a;
     color: #ffd0ec;
     transition: all 0.3s ease;
 }
-
 .navbar__links:hover {
     color: #1f2544;
     transition: all 0.3s ease;
 }
-
-
-/* DOES NOT WORK WELL YET */
-/*mobile rsponsive / tablet responisve part*/
-@media screen and (max-width: 960px) {
-    .navbar__container {
-        display: flex;
-        justify-content: space-between;
-        height: 80px;
-        z-index: 1;
-        width: 100%;
-        max-width: 1300px;
-        padding: 0;
-    }
-    .navbar__menu {
-        display: grid;
-        grid-template-columns: auto;
-        margin: 0;
-        width: 100%;
-        position: absolute;
-        top: -1000px; /*ensure that the menu animation coming from the top isn't seen normally*/
-        opacity: 0;
-        transition: all 0.5s ease;
-        height: 50vh;
-        z-index: -1;
-        background: #131313;
-    }
-
-    /*this will be the javascript that will trigger this*/
-    .navbar__menu.active {
-        background: #131313;
-        top: 100%;
-        opacity: 1;
-        transition: all 0.5s ease;
-        z-index: 99;
-        height: 50vh;
-        font-size: 1.6rem;
-    }
-
-    #navbar__logo {
-        padding-left: 25px;
-    }
-
-    .navbar__toggle .bar {
-        width: 25px;
-        height: 3px;
-        margin: 5px auto;
-        transition: all 0.3s ease-in-out;
-        background: #fff;
-    }
-    .navbar__item {
-        width: 100%;
-    }
-    .navbar__links {
-        text-align: center;
-        padding: 2rem;
-        width: 100%;
-        display: table;
-    }
-    #mobile-menu {
-        position: absolute;
-        top: 20%;
-        right: 5%;
-        transform: translate(5%, 20%);
-    }
-    .navbar__btn {
-        padding-bottom: 2rem;
-    }
-    .button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 80%;
-        height: 80px;
-        margin: 0; 
-    }
-
-    /*the rectangles on the side*/
-    .navbar__toggle .bar {
-        display: block;
-        cursor: pointer;
-    }
-
-    /*to add in javascript*/
-    #mobile-menu.is-active .bar:nth-child(2) {
-        opacity: 0;
-    }
-
-    #mobile-menu.is-active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-    #mobile-menu.is-active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
-}
-
 
 
 /* hero section CSS */
@@ -224,7 +121,6 @@
 .main__content h1 {
     font-size: 5rem;
     background-color: #ffd0ec;
-    /* background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%); */
     background-size: 100%;
     -webkit-background-clip: text;
     -moz-background-clip: text;
@@ -234,7 +130,6 @@
 .main__content h2 {
     font-size: 1.5rem;
     background-color: #ffd0ec;
-    /* background-image: linear-gradient(to top, #b721ff 0%, #21d4fd 100%); */
     background-size: 100%;
     -webkit-background-clip: text;
     -moz-background-clip: text;
@@ -285,46 +180,6 @@
     width: 100%;
 }
 
-
-/* try to move this button under the main__btn */
-.savedworkspaces__btn {
-    font-size: 1rem;
-    background-image: linear-gradient(to top, #ffd0ec 0%, #ffd0ec 100%);
-    padding: 14px 32px;
-    border: none;
-    border-radius: 20px;
-    color: #1f2544;
-    margin-top: 2rem;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.35s;
-    outline: none;
-}
-.savedworkspaces__btn a {
-    position: relative;
-    z-index: 2;
-    color: #1f2544;
-    text-decoration: none;
-}
-.savedworkspaces__btn:after {
-    position: absolute;
-    content: '';
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    background: #81689d;
-    transition: all 0.35s;
-    border-radius: 20px;
-}
-.savedworkspaces__btn:hover {
-    color: #fff;
-}
-.savedworkspaces__btn:hover:after {
-    width: 100%;
-}
-
-
 .main__img-container {
     text-align: center;
     border: 5px solid #ffd0ec;
@@ -335,53 +190,3 @@
     border: 5px solid #ffd0ec; 
     border-radius: 20px;
 }
-
-/* DOES NOT WORK WELL YET */
-/* mobile responsive */
-@media screen and (max-width: 768px) {
-    .main__container {
-        display: grid;
-        grid-template-columns: auto;
-        align-items: center;
-        justify-self: center;
-        width: 100%;
-        margin: 0 auto;
-        height: 90vh;
-    }
-
-    .main__content {
-        text-align: center;
-        margin-bottom: 4rem;
-    }
-    .main__content h1 {
-        font-size: 2.5rem;
-        margin-top: 2rem;
-    }
-    .main__content h2 {
-        font-size: 3rem;
-    }
-    .main__content p {
-        margin-top: 1rem;
-        font-size: 1.5rem;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .main__content h1 {
-        font-size: 2rem;
-        margin-top: 3rem;
-    }
-    .main__content h2 {
-        font-size: 2rem;
-    }
-    .main__content p {
-        margin-top: 2rem;
-        font-size: 1.5rem;
-    }
-
-    .main__btn {
-        padding: 12px 36px;
-        margin: 2.5rem 0;
-    }
-}
-
