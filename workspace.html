@@ -11,6 +11,7 @@
     }
   </style>
 
+
   <style>
     body { font-family: Arial, sans-serif; margin: 0; }
     .toolbar { padding: 10px; background: #f4f4f4; display: flex; gap: 10px; }
@@ -19,7 +20,10 @@
     .text { background: lightblue; }
     .shape { background: lightgreen; width: 50px; height: 50px; }
     .timer { background: lightcoral; }
-  </style>
+</style>
+
+
+
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -27,6 +31,9 @@
 </head>
 
 <body>
+
+
+
     <div class="toolbar">
         <button onclick="addElement('text')">Add Text</button>
         <button onclick="addElement('shape')">Add Shape</button>
@@ -104,14 +111,18 @@
         }
 
         function loadWorkspace() {
-            workspace.innerHTML = "";
+            workspace.innerHTML = ""; // Clear existing elements
             let data = JSON.parse(localStorage.getItem("workspaceData")) || [];
             data.forEach(item => {
                 addElement(item.type, item.top, item.left, item.content);
             });
         }
     </script>
+
     
+
+
+
   <script src="app.js"></script>
 </body>
 </html>
