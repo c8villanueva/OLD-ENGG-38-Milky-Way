@@ -27,13 +27,43 @@
 </head>
 
 <body>
-  <div class="toolbar">
+    <!-- navbar section -->
+   <nav class="navbar">
+    <div class="navbar__container">
+        <a href="landing.html" id="navbar__logo">
+            <i class="fa-solid fa-rocket">&nbsp</i> Milky Way
+        </a>
+        <div class="navbar__toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="navbar__menu">
+            
+            <!-- <li class="navbar__btn">
+                <a href="reg.html" class="button">login</a>
+            </li> -->
+
+            <button onclick="addElement('text')">Add Text</button>
+            <button onclick="addElement('shape')">Add Shape</button>
+            <button onclick="addElement('timer')">Add Timer</button>
+            <button onclick="saveWorkspace()">Save</button>
+            <button onclick="loadWorkspace()">Load</button>
+
+            <!-- <li class="navbar__btn">
+                <a href="landing.html" class="button">home</a>
+            </li> -->
+        </ul>
+    </div>
+</nav>
+
+  <!-- <div class="toolbar">
       <button onclick="addElement('text')">Add Text</button>
       <button onclick="addElement('shape')">Add Shape</button>
       <button onclick="addElement('timer')">Add Timer</button>
       <button onclick="saveWorkspace()">Save</button>
       <button onclick="loadWorkspace()">Load</button>
-  </div>
+  </div> -->
 
   <div class="workspace" id="workspace"></div>
   <script>
