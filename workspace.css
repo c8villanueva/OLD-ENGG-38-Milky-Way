@@ -24,9 +24,10 @@
     height: 80px;
     z-index: 1;
     width: 100%;
-    max-width: 1300px;
+    /* max-width: 1300px; */
     margin: 0 auto;
     padding: 0 50px;
+    align-items: center;
 }
 #navbar__logo{
     background-color: #ffd0ec;
@@ -42,7 +43,7 @@
     font-size: 2rem;
 }
 
-.fa-solid fa-dog {
+.fa-solid.fa-dog {
     margin-right: 0.5rem;
 }
 
@@ -51,6 +52,44 @@
     align-items: center;
     list-style: none;
     text-align: center;
+    position: relative;
+    gap: 10px;
+}
+
+.navbar_menu li {
+    position: relative;
+}
+
+.navbar__dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    background-color: transparent;
+    padding: 10px 0;
+    z-index: 999;
+}
+
+.navbar__dropdown a {
+    display: block;
+    padding: 10px 20px;
+    color: #1f2544;
+    background-color: #ffd0ec;
+    text-decoration: none;
+    margin: 4px 8px;
+}
+
+.navbar__dropdown a:hover {
+    background-color: #474f7a;
+    color: #ffd0ec;
+    transition: all 0.3s ease;
+}
+
+.navbar_menu li {
+    position: relative;
+}
+
+.navbar__menu li:hover .navbar__dropdown {
+    display: block;
 }
 
 .navbar__item {
@@ -89,26 +128,54 @@
     background: #ffd0ec;
     color: #1f2544;
 }
+
 .button:hover {
     background: #474f7a;
     color: #ffd0ec;
     transition: all 0.3s ease;
 }
+
+.buttonLayout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 10px 10px;
+    margin: 0 0.15rem;
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    background: #ffd0ec;
+    color: #1f2544;
+    max-width: 30px;
+}
+
+.buttonLayout:hover {
+    background: #474f7a;
+    color: #ffd0ec;
+    transition: all 0.3s ease;
+}
+
 .navbar__links:hover {
     color: #1f2544;
     transition: all 0.3s ease;
 }
 
+/* main workspace */
 .workspace{
-    background-color: #474f7a;
+    background-color: white;
     width: 100vw;
     height: 90vh;
     border: 1px solid #ddd;
     position: relative;
     overflow: hidden;
+    background-size: 20px 20px;
+    background-image: radial-gradient(circle, #bbb 1px, rgba(0, 0, 0, 0) 1px);
 }
 
 .element {
+    background-color: transparent;
     position: absolute;
     cursor: grab;
     padding: 10px;
@@ -142,19 +209,59 @@
     background-color: darkred;
 }
 
-.text {
-    background: lightblue;
+.color-picker {
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    bottom: -8px;
+    right: -8px;
+    z-index: 2;
+    border: none;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
-.shape {
+.element:hover .color-picker {
+    display: block;
+}
+
+.text, .text p {
+    border: none;
+    outline: none;
+    background-color: transparent !important;
+    z-index: 1;
+}
+
+.square {
     background: lightgreen;
     width: 50px;
     height: 50px;
+    border-radius: 0;
+    z-index: 0;
+    position: relative;
+    resize: both;
+    overflow: relative;
+}
+
+.circle {
+    background: lightgreen;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    z-index: 0;
+    position: relative;
+    resize: both;
+    overflow: relative;
 }
 
 /* timer */
+.timer {
+    z-index: 0;
+}
+
 .timer-container {
-    background: lightcoral;
+    /* background: lightcoral; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -211,7 +318,7 @@
     height: 200px;
     overflow-y: auto;
     position: relative;
-    z-index: 1;
+    z-index: 0;
 }
 
 .todo-list {
@@ -260,6 +367,7 @@
     top: 0;
     padding: 0 5px 0 5px;
 }
+
 .delBtn:hover {
     background: lightcoral;
     transition: all 0.3s ease;

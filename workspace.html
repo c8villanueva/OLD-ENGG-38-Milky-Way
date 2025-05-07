@@ -73,12 +73,27 @@
                 <span class="bar"></span>
             </div>
             <ul class="navbar__menu">
-                <a onclick="addElement('text')" class="button">text</a>
-                <a onclick="addElement('shape')" class="button">shape</a>
-                <a onclick="addElement('timer')" class="button">timer</a>
-                <a onclick="addElement('list')" class="button">list</a>
-                <a onclick="saveWorkspace()" class="button">save</a>
-                <a onclick="loadWorkspace()" class="button">load</a>
+                <li><a id="layoutToggle" onclick="changeLayout()" class="buttonLayout">[]</a></li>
+                <li><a onclick="addElement('text')" class="button">text</a></li>
+                <li><a href="#" class="button">shapes</a>
+                    <div class="navbar__dropdown">
+                        <a onclick="addElement('circle')" class="button">circle</a>
+                        <a onclick="addElement('square')" class="button">square</a>
+                    </div>
+                </li>
+                <li><a href="#" class="button">others</a>
+                    <div class="navbar__dropdown">
+                        <a onclick="addElement('timer')" class="button">timer</a>
+                        <a onclick="addElement('list')" class="button">list</a>
+                    </div>
+                </li>
+                <li><a href="#" class="button">⚙️</a>
+                    <div class="navbar__dropdown">
+                        <a onclick="clearWorkspace()" class="button">clear</a>
+                        <a onclick="saveWorkspace()" class="button">save</a>
+                        <a onclick="loadWorkspace()" class="button">load</a>
+                    </div>
+                </li>
                 <li class="navbar__btn">
                     <a href="reg.html" class="button">logout</a>
                 </li>
@@ -90,14 +105,48 @@
     <script>
         const workspace = document.getElementById("workspace");
 
+        const button = document.getElementById("layoutToggle");
+        let isGrid = true;
+        function changeLayout() {
+            isGrid = !isGrid;
+
+            if (isGrid) { // bullet journal style
+                workspace.style.backgroundSize = "20px 20px";
+                workspace.style.backgroundImage = "radial-gradient(circle, #bbb 1px, rgba(0, 0, 0, 0) 1px)";
+                button.textContent = "[]";
+            } else { // grid style
+                workspace.style.backgroundSize = "40px 40px";
+                workspace.style.backgroundImage = "linear-gradient(to right, #ccc 0.5px, transparent 0.5px), linear-gradient(to bottom, #ccc 0.5px, transparent 0.5px)";
+                button.textContent = "◯";
+            }
+        }
+
         function addElement(type, top = "50px", left = "50px", content = "") {
             let element = document.createElement("div");
+            let color = '#ccc';
             element.classList.add("element", type);
             element.style.top = top;
             element.style.left = left;
+            element.style.backgroundColor = color;
+
+            let colorPicker = document.createElement("input");
+            colorPicker.type = "color";
+            colorPicker.value = color;
+            colorPicker.className = "color-picker";
+
+            colorPicker.addEventListener("input", (e) => {
+                if (type == "text") {
+                    const textElement = element.querySelector("p");
+                    textElement.style.color = e.target.value
+                }
+                else {
+                    element.style.backgroundColor = e.target.value;
+                }
+            });
+            element.appendChild(colorPicker);
 
             let delete_element = document.createElement("button");
-            delete_element.innerText = "×";
+            delete_element.innerText = "x";
             delete_element.className = "delete_element";
             delete_element.onclick = () => {
                 if (confirm("Delete this element?")) {
@@ -111,10 +160,16 @@
                 textElement.innerText = content || "Click to edit text";
                 textElement.contentEditable = true;
                 textElement.style.margin = 0;
+                textElement.style.color = color;
+                textElement.style.backgroundColor = "transparent";
                 element.appendChild(textElement);
-            } else if (type === "shape") {
+            } else if (type === "square") {
                 element.style.width = "50px";
                 element.style.height = "50px";
+            } else if (type === "circle") {
+                element.style.width = "50px";
+                element.style.height = "50px"
+                element.style.borderRadius = "100%";
             } else if (type === "timer") {
                 const contentWrapper = document.createElement("div");
                 contentWrapper.className = "timer-container";
@@ -218,7 +273,7 @@
                     <button class="addBtn">+</button>
                     <ul class="todo-list"></ul>
                 `;
-                
+
                 element.appendChild(contentWrapper);
 
                 const input = contentWrapper.querySelector('.todo-input');
@@ -290,19 +345,31 @@
             });
         }
 
+        function clearWorkspace() {
+            if (confirm("Are you sure you want to clear the workspace?")) {
+                workspace.innerHTML = "";
+                saveWorkspace();
+            }
+        }
+
         function saveWorkspace() {
             let elements = document.querySelectorAll(".element");
             let data = [];
 
             elements.forEach(el => {
                 let content;
+                let textColor = "";
+
                 if (el.classList.contains("list")) {
                     const items = Array.from(el.querySelectorAll("li")).map(li => ({
                         text: li.firstChild.textContent.trim(),
                         checked: li.classList.contains("checked")
                     }));
-
                     content = JSON.stringify(items);
+                } else if (el.classList.contains("text")) {
+                    const textElement = el.querySelector("p");
+                    textColor = textElement.style.color;
+                    content = textElement.innerText;
                 } else {
                     content = el.innerText;
                 }
@@ -311,19 +378,28 @@
                     type: el.classList[1],
                     top: el.style.top,
                     left: el.style.left,
-                    content: content
+                    content: content,
+                    color: el.style.backgroundColor,
+                    textColor: textColor
                 });
             });
 
             localStorage.setItem("workspaceData", JSON.stringify(data));
-            alert("Workspace saved!");
         }
 
+
         function loadWorkspace() {
-            workspace.innerHTML = ""; // Clear existing elements
+            workspace.innerHTML = "";
             let data = JSON.parse(localStorage.getItem("workspaceData")) || [];
             data.forEach(item => {
                 addElement(item.type, item.top, item.left, item.content);
+                const element = workspace.querySelector(`.element[style*="top: ${item.top}"]`); // Find the element by position
+                element.style.backgroundColor = item.color;
+
+                if (item.textColor) {
+                    const textElement = element.querySelector("p");
+                    textElement.style.color = item.textColor;
+                }
             });
         }
     </script>
