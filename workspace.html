@@ -41,7 +41,8 @@
         <ul class="navbar__menu">
             <a onclick="addElement('text')" class="button">Text</a>
             <a onclick="addElement('shape')" class="button">Shape</a>
-            <a onclick="addElement('timer')" class="button">Timer</area>
+            <a onclick="addElement('timer')" class="button">Timer</a>
+            <a onclick="addElement('list')" class="button">List</a>
             <a onclick="saveWorkspace()" class="button">Save</a>
             <a onclick="loadWorkspace()" class="button">Load</a>
         </ul>
@@ -68,6 +69,53 @@
               element.innerText = content || "00:00";
               element.onclick = () => startTimer(element);
           }
+          else if (type === "list") {
+            element.innerHTML = `
+                <input type="text" placeholder="Add new item..." class="todo-input">
+                <button class="addBtn">+</button>
+                <ul class="todo-list"></ul>
+            `;
+
+            const input = element.querySelector('.todo-input');
+            const addBtn = element.querySelector('.addBtn');
+            const list = element.querySelector('.todo-list');
+
+            function createTodoItem(text, checked = false) {
+                const li = document.createElement("li");
+
+                const textSpan = document.createElement("span");
+                textSpan.classList.add("text");
+                textSpan.textContent = text;
+
+                const delBtn = document.createElement("span");
+                delBtn.classList.add("delBtn");
+                delBtn.innerHTML = "&times;";
+                delBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    li.remove();
+                };
+
+                li.appendChild(textSpan);
+                li.appendChild(delBtn);
+                if (checked) li.classList.add("checked");
+
+                li.onclick = () => li.classList.toggle("checked");
+                list.appendChild(li);
+            }
+
+            addBtn.onclick = () => {
+                const itemText = input.value.trim();
+                if (itemText) {
+                    createTodoItem(itemText);
+                    input.value = "";
+                }
+            };
+
+            if (content) {
+                const items = JSON.parse(content);
+                items.forEach(item => createTodoItem(item.text, item.checked));
+            }
+        }
           
           workspace.appendChild(element);
           makeDraggable(element);
@@ -108,19 +156,33 @@
       }
 
       function saveWorkspace() {
-          let elements = document.querySelectorAll(".element");
-          let data = [];
-          elements.forEach(el => {
-              data.push({
-                  type: el.classList[1],
-                  top: el.style.top,
-                  left: el.style.left,
-                  content: el.innerText
-              });
-          });
-          localStorage.setItem("workspaceData", JSON.stringify(data));
-          alert("Workspace saved!");
-      }
+        let elements = document.querySelectorAll(".element");
+        let data = [];
+
+        elements.forEach(el => {
+            let content;
+            if (el.classList.contains("list")) {
+                const items = Array.from(el.querySelectorAll("li")).map(li => ({
+                    text: li.firstChild.textContent.trim(),
+                    checked: li.classList.contains("checked")
+                }));
+
+                content = JSON.stringify(items);
+            } else {
+                content = el.innerText;
+            }
+
+            data.push({
+                type: el.classList[1],
+                top: el.style.top,
+                left: el.style.left,
+                content: content
+            });
+        });
+
+        localStorage.setItem("workspaceData", JSON.stringify(data));
+        alert("Workspace saved!");
+    }
 
       function loadWorkspace() {
           workspace.innerHTML = ""; // Clear existing elements

@@ -129,3 +129,60 @@
 .timer {
     background: lightcoral;
 }
+
+.list {
+    background: lightyellow;
+    width: 200px;
+    height: 200px;
+    overflow-y: auto;
+}
+
+.todo-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.todo-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    background-color: #aaa;
+    padding: 5px;
+    margin-bottom: 5px;
+    max-width: 200px;
+    cursor: pointer;
+    position: relative;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.todo-list li .text {
+    flex: 1;
+    word-break: break-word;
+    white-space: normal;
+    background-color: transparent;
+    max-width: 150px;
+}
+
+.todo-list li:hover {
+    background-color: #ddd;
+}
+
+.todo-list li.checked .text {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.delBtn {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0 5px 0 5px;
+}
+.delBtn:hover {
+    background: lightcoral;
+    transition: all 0.3s ease;
+}
