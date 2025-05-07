@@ -149,72 +149,35 @@
 }
 
 .timer-btns {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5px;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     align-items: center;
+    justify-content: center;
 }
 
-.study_startBtn {
-    padding: 0.25em 0.5em;
-    border-radius: 0.5em;
+.timer-btns .top-row,
+.timer-btns .bottom-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.timer-btns button {
+    padding: 8px 12px;
     border: none;
+    width: 80px;
+    border-radius: 5px;
+    background-color: #ddd;
+    font-weight: bold;
     cursor: pointer;
-    transition: 0.2s ease-in-out;
-    background: aaa;
-    width: 75px;
+    transition: background-color 0.2s ease;
 }
 
-.study_startBtn:hover {
-    background: #ddd;
-    transition: all 0.3s ease;
+.timer-btns button:hover {
+    background-color: #aaa;
 }
 
-.break_startBtn {
-    padding: 0.25em 0.5em;
-    border-radius: 0.5em;
-    border: none;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-    background: aaa;
-    width: 75px;
-}
-
-.break_startBtn:hover {
-    background: #ddd;
-    transition: all 0.3s ease;
-}
-
-.pause_resumeBtn {
-    padding: 0.25em 0.5em;
-    border-radius: 0.5em;
-    border: none;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-    background: aaa;
-    width: 75px;
-}
-
-.pause_resumeBtn:hover {
-    background: #ddd;
-    transition: all 0.3s ease;
-}
-
-.resetBtn {
-    padding: 0.25em 0.5em;
-    border-radius: 0.5em;
-    border: none;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-    background: aaa;
-    width: 75px;
-}
-
-.resetBtn:hover {
-    background: #ddd;
-    transition: all 0.3s ease;
-}
 
 /* todo list */
 .list {
@@ -235,7 +198,7 @@
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
-    background-color: #aaa;
+    background-color: #ddd;
     padding: 5px;
     margin-bottom: 5px;
     max-width: 200px;
@@ -254,7 +217,7 @@
 }
 
 .todo-list li:hover {
-    background-color: #ddd;
+    background-color: #aaa;
     transition: all 0.3s ease;
 }
 

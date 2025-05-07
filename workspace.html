@@ -104,17 +104,21 @@
                 element.style.height = "50px";
             } else if (type === "timer") {
                 element.innerHTML = `
-                <div class="timer-container">
-                    <p class="timer-title">Pomodoro Timer</p>
-                    <h1 class="timer-clk" id="timer">25:00</h1>
+                    <div class="timer-container">
+                        <p class="timer-title">Pomodoro Timer</p>
+                        <h1 class="timer-clk" id="timer">25:00</h1>
 
-                    <div class="timer-btns">
-                        <button class="study_startBtn">Study</button>
-                        <button class="break_startBtn">Break</button>
-                        <button class="pause_resumeBtn">Pause</button>
-                        <button class="resetBtn">Reset</button>
+                        <div class="timer-btns">
+                            <div class="top-row">
+                                <button class="study_startBtn">Study</button>
+                                <button class="break_startBtn">Break</button>
+                            </div>
+                            <div class="bottom-row" style="display: none;">
+                                <button class="pause_resumeBtn">Pause</button>
+                                <button class="resetBtn">Reset</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
                 `;
 
                 const study_startBtn = element.querySelector('.study_startBtn');
@@ -122,6 +126,8 @@
                 const pause_resumeBtn = element.querySelector('.pause_resumeBtn');
                 const resetBtn = element.querySelector('.resetBtn');
                 const timerDisplay = element.querySelector('#timer');
+                const topRow = element.querySelector('.top-row');
+                const bottomRow = element.querySelector('.bottom-row');
 
                 let timeLeft = 1500;
                 let interval = null;
@@ -133,31 +139,41 @@
                     timerDisplay.innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
                 };
 
+                const showTopRow = () => {
+                    topRow.style.display = "flex";
+                    bottomRow.style.display = "none";
+                };
+
+                const showBottomRow = () => {
+                    topRow.style.display = "none";
+                    bottomRow.style.display = "flex";
+                };
+
                 const startTimer = (duration) => {
                     clearInterval(interval);
                     timeLeft = duration;
                     isPaused = false;
-                    pause_resumeBtn.textContent = "Pause";
                     updateTimer();
+                    showBottomRow();
+                    pause_resumeBtn.textContent = "Pause";
 
-                    interval = setInterval(countdown, 1000);
-                };
+                    interval = setInterval(() => {
+                        if (!isPaused) {
+                            timeLeft--;
+                            updateTimer();
 
-                const countdown = () => {
-                    if (!isPaused && timeLeft > 0) {
-                        timeLeft--;
-                        updateTimer();
-
-                        if (timeLeft <= 0) {
-                            clearInterval(interval);
-                            alert("Time's up!");
+                            if (timeLeft <= 0) {
+                                clearInterval(interval);
+                                interval = null;
+                                showTopRow();
+                                alert("Time's up!");
+                            }
                         }
-                    }
+                    }, 1000);
                 };
 
                 const togglePauseResume = () => {
                     if (interval === null) return;
-
                     isPaused = !isPaused;
                     pause_resumeBtn.textContent = isPaused ? "Resume" : "Pause";
                 };
@@ -165,10 +181,11 @@
                 const resetTimer = () => {
                     clearInterval(interval);
                     interval = null;
-                    isPaused = false;
                     timeLeft = 1500;
-                    pause_resumeBtn.textContent = "Pause";
+                    isPaused = false;
                     updateTimer();
+                    showTopRow();
+                    pause_resumeBtn.textContent = "Pause";
                 };
 
                 study_startBtn.addEventListener("click", () => startTimer(1500));
@@ -177,6 +194,7 @@
                 resetBtn.addEventListener("click", resetTimer);
 
                 updateTimer();
+
             } else if (type === "list") {
                 element.innerHTML = `
                 <input type="text" placeholder="Add new item..." class="todo-input">
