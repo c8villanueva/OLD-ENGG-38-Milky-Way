@@ -112,11 +112,11 @@
 
             if (isGrid) { // bullet journal style
                 workspace.style.backgroundSize = "20px 20px";
-                workspace.style.backgroundImage = "radial-gradient(circle, #bbb 1px, rgba(0, 0, 0, 0) 1px)";
+                workspace.style.backgroundImage = "radial-gradient(circle, #aaa 1px, rgba(0, 0, 0, 0) 1px)";
                 button.textContent = "[]";
             } else { // grid style
-                workspace.style.backgroundSize = "40px 40px";
-                workspace.style.backgroundImage = "linear-gradient(to right, #ccc 0.5px, transparent 0.5px), linear-gradient(to bottom, #ccc 0.5px, transparent 0.5px)";
+                workspace.style.backgroundSize = "20px 20px";
+                workspace.style.backgroundImage = "linear-gradient(to right, #ccc 1px, transparent 1px), linear-gradient(to bottom, #ccc 1px, transparent 1px)";
                 button.textContent = "◯";
             }
         }
@@ -160,7 +160,7 @@
                 textElement.innerText = content || "Click to edit text";
                 textElement.contentEditable = true;
                 textElement.style.margin = 0;
-                textElement.style.color = color;
+                textElement.style.color = "black";
                 textElement.style.backgroundColor = "transparent";
                 element.appendChild(textElement);
             } else if (type === "square") {
