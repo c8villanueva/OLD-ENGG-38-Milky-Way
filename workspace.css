@@ -126,10 +126,97 @@
     height: 50px;
 }
 
-.timer {
+/* timer */
+.timer-container {
     background: lightcoral;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 2em;
+    padding: 5px;
+    width: 200px;
 }
 
+.timer-title {
+    font-size: 1rem;
+}
+
+.timer-clk {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.timer-btns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.study_startBtn {
+    padding: 0.25em 0.5em;
+    border-radius: 0.5em;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    background: aaa;
+    width: 75px;
+}
+
+.study_startBtn:hover {
+    background: #ddd;
+    transition: all 0.3s ease;
+}
+
+.break_startBtn {
+    padding: 0.25em 0.5em;
+    border-radius: 0.5em;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    background: aaa;
+    width: 75px;
+}
+
+.break_startBtn:hover {
+    background: #ddd;
+    transition: all 0.3s ease;
+}
+
+.pause_resumeBtn {
+    padding: 0.25em 0.5em;
+    border-radius: 0.5em;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    background: aaa;
+    width: 75px;
+}
+
+.pause_resumeBtn:hover {
+    background: #ddd;
+    transition: all 0.3s ease;
+}
+
+.resetBtn {
+    padding: 0.25em 0.5em;
+    border-radius: 0.5em;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    background: aaa;
+    width: 75px;
+}
+
+.resetBtn:hover {
+    background: #ddd;
+    transition: all 0.3s ease;
+}
+
+/* todo list */
 .list {
     background: lightyellow;
     width: 200px;
@@ -168,6 +255,7 @@
 
 .todo-list li:hover {
     background-color: #ddd;
+    transition: all 0.3s ease;
 }
 
 .todo-list li.checked .text {

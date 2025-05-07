@@ -1,198 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="workspace.css">
-  <script src="https://kit.fontawesome.com/3f153ad2ee.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&display=swap">
-  <style>
-    body{
-      font-family: "Inclusive Sans", serif;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="workspace.css">
+    <script src="https://kit.fontawesome.com/3f153ad2ee.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&display=swap">
+    <style>
+        body {
+            font-family: "Inclusive Sans", serif;
+        }
+    </style>
 
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; }
-    .toolbar { padding: 10px; background: #f4f4f4; display: flex; gap: 10px; }
-    .workspace { width: 100vw; height: 90vh; border: 1px solid #ddd; position: relative; overflow: hidden; }
-    .element { position: absolute; cursor: grab; padding: 10px; border-radius: 5px; }
-    .text { background: lightblue; }
-    .shape { background: lightgreen; width: 50px; height: 50px; }
-    .timer { background: lightcoral; }
-  </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Milky Way</title>
+        .toolbar {
+            padding: 10px;
+            background: #f4f4f4;
+            display: flex;
+            gap: 10px;
+        }
+
+        .workspace {
+            width: 100vw;
+            height: 90vh;
+            border: 1px solid #ddd;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .element {
+            position: absolute;
+            cursor: grab;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .text {
+            background: lightblue;
+        }
+
+        .shape {
+            background: lightgreen;
+            width: 50px;
+            height: 50px;
+        }
+
+        .timer {
+            background: lightcoral;
+        }
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Milky Way</title>
 </head>
 
 <body>
     <!-- navbar section -->
-   <nav class="navbar">
-    <div class="navbar__container">
-        <a href="landing.html" id="navbar__logo">
-            <i class="fa-solid fa-rocket">&nbsp</i> Milky Way
-        </a>
-        <div class="navbar__toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="landing.html" id="navbar__logo">
+                <i class="fa-solid fa-rocket">&nbsp</i> Milky Way
+            </a>
+            <div class="navbar__toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <a onclick="addElement('text')" class="button">text</a>
+                <a onclick="addElement('shape')" class="button">shape</a>
+                <a onclick="addElement('timer')" class="button">timer</a>
+                <a onclick="addElement('list')" class="button">list</a>
+                <a onclick="saveWorkspace()" class="button">save</a>
+                <a onclick="loadWorkspace()" class="button">load</a>
+                <li class="navbar__btn">
+                    <a href="reg.html" class="button">logout</a>
+                </li>
+            </ul>
         </div>
-        <ul class="navbar__menu">
-            <a onclick="addElement('text')" class="button">Text</a>
-            <a onclick="addElement('shape')" class="button">Shape</a>
-            <a onclick="addElement('timer')" class="button">Timer</a>
-            <a onclick="addElement('list')" class="button">List</a>
-            <a onclick="saveWorkspace()" class="button">Save</a>
-            <a onclick="loadWorkspace()" class="button">Load</a>
-        </ul>
-    </div>
-</nav>
+    </nav>
 
-  <div class="workspace" id="workspace"></div>
-  <script>
-      const workspace = document.getElementById("workspace");
-      
-      function addElement(type, top = "50px", left = "50px", content = "") {
-          let element = document.createElement("div");
-          element.classList.add("element", type);
-          element.style.top = top;
-          element.style.left = left;
-          
-          if (type === "text") {
-              element.innerText = content || "Click to edit text";
-              element.contentEditable = true;
-          } else if (type === "shape") {
-              element.style.width = "50px";
-              element.style.height = "50px";
-          } else if (type === "timer") {
-              element.innerText = content || "00:00";
-              element.onclick = () => startTimer(element);
-          }
-          else if (type === "list") {
-            element.innerHTML = `
+    <div class="workspace" id="workspace"></div>
+    <script>
+        const workspace = document.getElementById("workspace");
+
+        function addElement(type, top = "50px", left = "50px", content = "") {
+            let element = document.createElement("div");
+            element.classList.add("element", type);
+            element.style.top = top;
+            element.style.left = left;
+
+            if (type === "text") {
+                element.innerText = content || "Click to edit text";
+                element.contentEditable = true;
+            } else if (type === "shape") {
+                element.style.width = "50px";
+                element.style.height = "50px";
+            } else if (type === "timer") {
+                element.innerHTML = `
+                <div class="timer-container">
+                    <p class="timer-title">Pomodoro Timer</p>
+                    <h1 class="timer-clk" id="timer">25:00</h1>
+
+                    <div class="timer-btns">
+                        <button class="study_startBtn">Study</button>
+                        <button class="break_startBtn">Break</button>
+                        <button class="pause_resumeBtn">Pause</button>
+                        <button class="resetBtn">Reset</button>
+                    </div>
+                </div>
+                `;
+
+                const study_startBtn = element.querySelector('.study_startBtn');
+                const break_startBtn = element.querySelector('.break_startBtn');
+                const pause_resumeBtn = element.querySelector('.pause_resumeBtn');
+                const resetBtn = element.querySelector('.resetBtn');
+                const timerDisplay = element.querySelector('#timer');
+
+                let timeLeft = 1500;
+                let interval = null;
+                let isPaused = false;
+
+                const updateTimer = () => {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerDisplay.innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                };
+
+                const startTimer = (duration) => {
+                    clearInterval(interval);
+                    timeLeft = duration;
+                    isPaused = false;
+                    pause_resumeBtn.textContent = "Pause";
+                    updateTimer();
+
+                    interval = setInterval(countdown, 1000);
+                };
+
+                const countdown = () => {
+                    if (!isPaused && timeLeft > 0) {
+                        timeLeft--;
+                        updateTimer();
+
+                        if (timeLeft <= 0) {
+                            clearInterval(interval);
+                            alert("Time's up!");
+                        }
+                    }
+                };
+
+                const togglePauseResume = () => {
+                    if (interval === null) return;
+
+                    isPaused = !isPaused;
+                    pause_resumeBtn.textContent = isPaused ? "Resume" : "Pause";
+                };
+
+                const resetTimer = () => {
+                    clearInterval(interval);
+                    interval = null;
+                    isPaused = false;
+                    timeLeft = 1500;
+                    pause_resumeBtn.textContent = "Pause";
+                    updateTimer();
+                };
+
+                study_startBtn.addEventListener("click", () => startTimer(1500));
+                break_startBtn.addEventListener("click", () => startTimer(300));
+                pause_resumeBtn.addEventListener("click", togglePauseResume);
+                resetBtn.addEventListener("click", resetTimer);
+
+                updateTimer();
+            } else if (type === "list") {
+                element.innerHTML = `
                 <input type="text" placeholder="Add new item..." class="todo-input">
                 <button class="addBtn">+</button>
                 <ul class="todo-list"></ul>
             `;
 
-            const input = element.querySelector('.todo-input');
-            const addBtn = element.querySelector('.addBtn');
-            const list = element.querySelector('.todo-list');
+                const input = element.querySelector('.todo-input');
+                const addBtn = element.querySelector('.addBtn');
+                const list = element.querySelector('.todo-list');
 
-            function createTodoItem(text, checked = false) {
-                const li = document.createElement("li");
+                function createTodoItem(text, checked = false) {
+                    const li = document.createElement("li");
 
-                const textSpan = document.createElement("span");
-                textSpan.classList.add("text");
-                textSpan.textContent = text;
+                    const textSpan = document.createElement("span");
+                    textSpan.classList.add("text");
+                    textSpan.textContent = text;
 
-                const delBtn = document.createElement("span");
-                delBtn.classList.add("delBtn");
-                delBtn.innerHTML = "&times;";
-                delBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    li.remove();
+                    const delBtn = document.createElement("span");
+                    delBtn.classList.add("delBtn");
+                    delBtn.innerHTML = "&times;";
+                    delBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        li.remove();
+                    };
+
+                    li.appendChild(textSpan);
+                    li.appendChild(delBtn);
+                    if (checked) li.classList.add("checked");
+
+                    li.onclick = () => li.classList.toggle("checked");
+                    list.appendChild(li);
+                }
+
+                addBtn.onclick = () => {
+                    const itemText = input.value.trim();
+                    if (itemText) {
+                        createTodoItem(itemText);
+                        input.value = "";
+                    }
                 };
 
-                li.appendChild(textSpan);
-                li.appendChild(delBtn);
-                if (checked) li.classList.add("checked");
-
-                li.onclick = () => li.classList.toggle("checked");
-                list.appendChild(li);
-            }
-
-            addBtn.onclick = () => {
-                const itemText = input.value.trim();
-                if (itemText) {
-                    createTodoItem(itemText);
-                    input.value = "";
+                if (content) {
+                    const items = JSON.parse(content);
+                    items.forEach(item => createTodoItem(item.text, item.checked));
                 }
-            };
-
-            if (content) {
-                const items = JSON.parse(content);
-                items.forEach(item => createTodoItem(item.text, item.checked));
             }
+
+            workspace.appendChild(element);
+            makeDraggable(element);
         }
-          
-          workspace.appendChild(element);
-          makeDraggable(element);
-      }
 
-      function makeDraggable(element) {
-        let isDragging = false;
-        let offsetX = 0, offsetY = 0;
+        function makeDraggable(element) {
+            let isDragging = false;
+            let offsetX = 0, offsetY = 0;
 
-        element.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            offsetX = e.clientX - element.offsetLeft;
-            offsetY = e.clientY - element.offsetTop;
-            element.style.cursor = 'grabbing';
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (isDragging) {
-            element.style.left = (e.clientX - offsetX) + 'px';
-            element.style.top = (e.clientY - offsetY) + 'px';
-            }
-        });
-
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-            element.style.cursor = 'grab';
-        });
-    }
-
-      function startTimer(element) {
-          let seconds = 0;
-          setInterval(() => {
-              seconds++;
-              let mins = Math.floor(seconds / 60);
-              let secs = seconds % 60;
-              element.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-          }, 1000);
-      }
-
-      function saveWorkspace() {
-        let elements = document.querySelectorAll(".element");
-        let data = [];
-
-        elements.forEach(el => {
-            let content;
-            if (el.classList.contains("list")) {
-                const items = Array.from(el.querySelectorAll("li")).map(li => ({
-                    text: li.firstChild.textContent.trim(),
-                    checked: li.classList.contains("checked")
-                }));
-
-                content = JSON.stringify(items);
-            } else {
-                content = el.innerText;
-            }
-
-            data.push({
-                type: el.classList[1],
-                top: el.style.top,
-                left: el.style.left,
-                content: content
+            element.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                offsetX = e.clientX - element.offsetLeft;
+                offsetY = e.clientY - element.offsetTop;
+                element.style.cursor = 'grabbing';
             });
-        });
 
-        localStorage.setItem("workspaceData", JSON.stringify(data));
-        alert("Workspace saved!");
-    }
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    element.style.left = (e.clientX - offsetX) + 'px';
+                    element.style.top = (e.clientY - offsetY) + 'px';
+                }
+            });
 
-      function loadWorkspace() {
-          workspace.innerHTML = ""; // Clear existing elements
-          let data = JSON.parse(localStorage.getItem("workspaceData")) || [];
-          data.forEach(item => {
-              addElement(item.type, item.top, item.left, item.content);
-          });
-      }
-  </script>
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                element.style.cursor = 'grab';
+            });
+        }
 
-<script src="app.js"></script>
+        function saveWorkspace() {
+            let elements = document.querySelectorAll(".element");
+            let data = [];
+
+            elements.forEach(el => {
+                let content;
+                if (el.classList.contains("list")) {
+                    const items = Array.from(el.querySelectorAll("li")).map(li => ({
+                        text: li.firstChild.textContent.trim(),
+                        checked: li.classList.contains("checked")
+                    }));
+
+                    content = JSON.stringify(items);
+                } else {
+                    content = el.innerText;
+                }
+
+                data.push({
+                    type: el.classList[1],
+                    top: el.style.top,
+                    left: el.style.left,
+                    content: content
+                });
+            });
+
+            localStorage.setItem("workspaceData", JSON.stringify(data));
+            alert("Workspace saved!");
+        }
+
+        function loadWorkspace() {
+            workspace.innerHTML = ""; // Clear existing elements
+            let data = JSON.parse(localStorage.getItem("workspaceData")) || [];
+            data.forEach(item => {
+                addElement(item.type, item.top, item.left, item.content);
+            });
+        }
+    </script>
+
+    <script src="app.js"></script>
 </body>
+
 </html>
