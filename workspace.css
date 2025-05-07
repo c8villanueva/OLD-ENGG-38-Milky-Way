@@ -116,6 +116,32 @@
     user-select: none;
 }
 
+.element .delete_element {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    line-height: 20px;
+    cursor: pointer;
+    z-index: 2;
+    /* pointer-events: auto; */
+}
+
+.element:hover .delete_element {
+    display: block;
+  }
+
+.element .delete_element:hover {
+    background-color: darkred;
+}
+
 .text {
     background: lightblue;
 }
@@ -178,13 +204,14 @@
     background-color: #aaa;
 }
 
-
 /* todo list */
 .list {
     background: lightyellow;
     width: 200px;
     height: 200px;
     overflow-y: auto;
+    position: relative;
+    z-index: 1;
 }
 
 .todo-list {
@@ -208,7 +235,7 @@
     transition: background-color 0.3s ease;
 }
 
-.todo-list li .text {
+.todo-list li .item-text {
     flex: 1;
     word-break: break-word;
     white-space: normal;
@@ -216,14 +243,14 @@
     max-width: 150px;
 }
 
+.todo-list li.checked .item-text {
+    text-decoration: line-through;
+    color: gray;
+}
+
 .todo-list li:hover {
     background-color: #aaa;
     transition: all 0.3s ease;
-}
-
-.todo-list li.checked .text {
-    text-decoration: line-through;
-    color: gray;
 }
 
 .delBtn {

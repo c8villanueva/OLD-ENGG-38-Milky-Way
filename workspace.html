@@ -96,38 +96,53 @@
             element.style.top = top;
             element.style.left = left;
 
+            let delete_element = document.createElement("button");
+            delete_element.innerText = "×";
+            delete_element.className = "delete_element";
+            delete_element.onclick = () => {
+                if (confirm("Delete this element?")) {
+                    element.remove();
+                }
+            };
+            element.appendChild(delete_element);
+
             if (type === "text") {
-                element.innerText = content || "Click to edit text";
-                element.contentEditable = true;
+                const textElement = document.createElement("p");
+                textElement.innerText = content || "Click to edit text";
+                textElement.contentEditable = true;
+                textElement.style.margin = 0;
+                element.appendChild(textElement);
             } else if (type === "shape") {
                 element.style.width = "50px";
                 element.style.height = "50px";
             } else if (type === "timer") {
-                element.innerHTML = `
-                    <div class="timer-container">
-                        <p class="timer-title">Pomodoro Timer</p>
-                        <h1 class="timer-clk" id="timer">25:00</h1>
+                const contentWrapper = document.createElement("div");
+                contentWrapper.className = "timer-container";
+                contentWrapper.innerHTML = `
+                    <p class="timer-title">Pomodoro Timer</p>
+                    <h1 class="timer-clk" id="timer">25:00</h1>
 
-                        <div class="timer-btns">
-                            <div class="top-row">
-                                <button class="study_startBtn">Study</button>
-                                <button class="break_startBtn">Break</button>
-                            </div>
-                            <div class="bottom-row" style="display: none;">
-                                <button class="pause_resumeBtn">Pause</button>
-                                <button class="resetBtn">Reset</button>
-                            </div>
+                    <div class="timer-btns">
+                        <div class="top-row">
+                            <button class="study_startBtn">Study</button>
+                            <button class="break_startBtn">Break</button>
+                        </div>
+                        <div class="bottom-row" style="display: none;">
+                            <button class="pause_resumeBtn">Pause</button>
+                            <button class="resetBtn">Reset</button>
                         </div>
                     </div>
                 `;
 
-                const study_startBtn = element.querySelector('.study_startBtn');
-                const break_startBtn = element.querySelector('.break_startBtn');
-                const pause_resumeBtn = element.querySelector('.pause_resumeBtn');
-                const resetBtn = element.querySelector('.resetBtn');
-                const timerDisplay = element.querySelector('#timer');
-                const topRow = element.querySelector('.top-row');
-                const bottomRow = element.querySelector('.bottom-row');
+                element.appendChild(contentWrapper);
+
+                const study_startBtn = contentWrapper.querySelector('.study_startBtn');
+                const break_startBtn = contentWrapper.querySelector('.break_startBtn');
+                const pause_resumeBtn = contentWrapper.querySelector('.pause_resumeBtn');
+                const resetBtn = contentWrapper.querySelector('.resetBtn');
+                const timerDisplay = contentWrapper.querySelector('#timer');
+                const topRow = contentWrapper.querySelector('.top-row');
+                const bottomRow = contentWrapper.querySelector('.bottom-row');
 
                 let timeLeft = 1500;
                 let interval = null;
@@ -196,21 +211,25 @@
                 updateTimer();
 
             } else if (type === "list") {
-                element.innerHTML = `
-                <input type="text" placeholder="Add new item..." class="todo-input">
-                <button class="addBtn">+</button>
-                <ul class="todo-list"></ul>
-            `;
+                const contentWrapper = document.createElement("div");
+                contentWrapper.className = "list-container";
+                contentWrapper.innerHTML = `
+                    <input type="text" placeholder="Add new item..." class="todo-input">
+                    <button class="addBtn">+</button>
+                    <ul class="todo-list"></ul>
+                `;
+                
+                element.appendChild(contentWrapper);
 
-                const input = element.querySelector('.todo-input');
-                const addBtn = element.querySelector('.addBtn');
-                const list = element.querySelector('.todo-list');
+                const input = contentWrapper.querySelector('.todo-input');
+                const addBtn = contentWrapper.querySelector('.addBtn');
+                const list = contentWrapper.querySelector('.todo-list');
 
                 function createTodoItem(text, checked = false) {
                     const li = document.createElement("li");
 
                     const textSpan = document.createElement("span");
-                    textSpan.classList.add("text");
+                    textSpan.classList.add("item-text");
                     textSpan.textContent = text;
 
                     const delBtn = document.createElement("span");
