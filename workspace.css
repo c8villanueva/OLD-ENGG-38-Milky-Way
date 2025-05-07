@@ -80,8 +80,8 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    padding: 10px 20px;
-    height: 100%;
+    padding: 10px 10px;
+    margin: 0 0.15rem;
     width: 100%;
     border: none;
     outline: none;
@@ -102,3 +102,34 @@
 .workspace{
     background-color: #474f7a;
 }
+
+/* .workspace {
+    width: 100vw;
+    height: 90vh;
+    border: 1px solid #ddd;
+    position: relative;
+    overflow: hidden;
+    background-color: #474f7a;
+  }
+
+  .element {
+    position: absolute;
+    cursor: grab;
+    padding: 10px;
+    border-radius: 5px;
+    user-select: none;
+  }
+
+  .text {
+    background: lightblue;
+  }
+
+  .shape {
+    background: lightgreen;
+    width: 50px;
+    height: 50px;
+  }
+
+  .timer {
+    background: lightcoral;
+  } */

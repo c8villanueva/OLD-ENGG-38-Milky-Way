@@ -39,20 +39,11 @@
             <span class="bar"></span>
         </div>
         <ul class="navbar__menu">
-            
-            <!-- <li class="navbar__btn">
-                <a href="reg.html" class="button">login</a>
-            </li> -->
-
-            <button onclick="addElement('text')">Add Text</button>
-            <button onclick="addElement('shape')">Add Shape</button>
-            <button onclick="addElement('timer')">Add Timer</button>
-            <button onclick="saveWorkspace()">Save</button>
-            <button onclick="loadWorkspace()">Load</button>
-
-            <!-- <li class="navbar__btn">
-                <a href="landing.html" class="button">home</a>
-            </li> -->
+            <a onclick="addElement('text')" class="button">Text</a>
+            <a onclick="addElement('shape')" class="button">Shape</a>
+            <a onclick="addElement('timer')" class="button">Timer</area>
+            <a onclick="saveWorkspace()" class="button">Save</a>
+            <a onclick="loadWorkspace()" class="button">Load</a>
         </ul>
     </div>
 </nav>
@@ -67,17 +58,17 @@
 
   <div class="workspace" id="workspace"></div>
   <script>
-      let workspace = document.getElementById("workspace");
+      const workspace = document.getElementById("workspace");
       
       function addElement(type, top = "50px", left = "50px", content = "") {
           let element = document.createElement("div");
           element.classList.add("element", type);
           element.style.top = top;
           element.style.left = left;
-          element.draggable = true;
+        //   element.draggable = true;
           
           if (type === "text") {
-              element.innerText = content || "Text Element";
+              element.innerText = content || "Click to edit text";
               element.contentEditable = true;
           } else if (type === "shape") {
               element.style.width = "50px";
@@ -87,26 +78,73 @@
               element.onclick = () => startTimer(element);
           }
           
-          element.addEventListener("dragstart", dragStart);
-          element.addEventListener("dragend", dragEnd);
+        //   element.addEventListener("dragstart", dragStart);
+        //   element.addEventListener("dragend", dragEnd);
           workspace.appendChild(element);
+          makeDraggable(element);
       }
+
+      function makeDraggable(element) {
+        let isDragging = false;
+        let offsetX = 0, offsetY = 0;
+
+        element.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            offsetX = e.clientX - element.offsetLeft;
+            offsetY = e.clientY - element.offsetTop;
+            element.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+            element.style.left = (e.clientX - offsetX) + 'px';
+            element.style.top = (e.clientY - offsetY) + 'px';
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            element.style.cursor = 'grab';
+        });
+    }
+
+    //   var dragValue;
+
+    //   function move(id){
+    //       var element = document.getElementById("theDiv");
+    //       element.style.position = "absolute";
+    //       element.onmousedown = function(){
+    //       dragValue = element;
+    //       }
+    //   }
+
+    //   document.onmouseup = function(event){
+    //       dragValue = null;
+    //   }
+
+    //   document.onmousemove = function(event){
+    //       var x = e.pageX;
+    //       var y = e.pageY;
+
+    //       dragValue.style.left = x + "px";
+    //       dragValue.style.top = y + "px";
+    //   }
       
-      function dragStart(event) {
-          event.target.style.opacity = 0.5;
-          event.dataTransfer.setData("text/plain", null);
-          let element = event.target;
+    //   function dragStart(event) {
+    //       event.target.style.opacity = 0.5;
+    //       event.dataTransfer.setData("text/plain", null);
+    //       let element = event.target;
           
-          document.onmousemove = function (e) {
-              element.style.left = e.pageX - 25 + "px";
-              element.style.top = e.pageY - 25 + "px";
-          };
-      }
+    //       document.onmousemove = function (e) {
+    //           element.style.left = e.pageX - 25 + "px";
+    //           element.style.top = e.pageY - 25 + "px";
+    //       };
+    //   }
       
-      function dragEnd(event) {
-          event.target.style.opacity = 1;
-          document.onmousemove = null;
-      }
+    //   function dragEnd(event) {
+    //       event.target.style.opacity = 1;
+    //       document.onmousemove = null;
+    //   }
       
       function startTimer(element) {
           let seconds = 0;
