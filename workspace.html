@@ -48,14 +48,6 @@
     </div>
 </nav>
 
-  <!-- <div class="toolbar">
-      <button onclick="addElement('text')">Add Text</button>
-      <button onclick="addElement('shape')">Add Shape</button>
-      <button onclick="addElement('timer')">Add Timer</button>
-      <button onclick="saveWorkspace()">Save</button>
-      <button onclick="loadWorkspace()">Load</button>
-  </div> -->
-
   <div class="workspace" id="workspace"></div>
   <script>
       const workspace = document.getElementById("workspace");
@@ -65,7 +57,6 @@
           element.classList.add("element", type);
           element.style.top = top;
           element.style.left = left;
-        //   element.draggable = true;
           
           if (type === "text") {
               element.innerText = content || "Click to edit text";
@@ -78,8 +69,6 @@
               element.onclick = () => startTimer(element);
           }
           
-        //   element.addEventListener("dragstart", dragStart);
-        //   element.addEventListener("dragend", dragEnd);
           workspace.appendChild(element);
           makeDraggable(element);
       }
@@ -108,44 +97,6 @@
         });
     }
 
-    //   var dragValue;
-
-    //   function move(id){
-    //       var element = document.getElementById("theDiv");
-    //       element.style.position = "absolute";
-    //       element.onmousedown = function(){
-    //       dragValue = element;
-    //       }
-    //   }
-
-    //   document.onmouseup = function(event){
-    //       dragValue = null;
-    //   }
-
-    //   document.onmousemove = function(event){
-    //       var x = e.pageX;
-    //       var y = e.pageY;
-
-    //       dragValue.style.left = x + "px";
-    //       dragValue.style.top = y + "px";
-    //   }
-      
-    //   function dragStart(event) {
-    //       event.target.style.opacity = 0.5;
-    //       event.dataTransfer.setData("text/plain", null);
-    //       let element = event.target;
-          
-    //       document.onmousemove = function (e) {
-    //           element.style.left = e.pageX - 25 + "px";
-    //           element.style.top = e.pageY - 25 + "px";
-    //       };
-    //   }
-      
-    //   function dragEnd(event) {
-    //       event.target.style.opacity = 1;
-    //       document.onmousemove = null;
-    //   }
-      
       function startTimer(element) {
           let seconds = 0;
           setInterval(() => {
