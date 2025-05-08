@@ -12,49 +12,6 @@
         }
     </style>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-        }
-
-        .toolbar {
-            padding: 10px;
-            background: #f4f4f4;
-            display: flex;
-            gap: 10px;
-        }
-
-        .workspace {
-            width: 100vw;
-            height: 90vh;
-            border: 1px solid #ddd;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .element {
-            position: absolute;
-            cursor: grab;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .text {
-            background: lightblue;
-        }
-
-        .shape {
-            background: lightgreen;
-            width: 50px;
-            height: 50px;
-        }
-
-        .timer {
-            background: lightcoral;
-        }
-    </style>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Milky Way</title>
@@ -133,7 +90,6 @@
             colorPicker.type = "color";
             colorPicker.value = color;
             colorPicker.className = "color-picker";
-
             colorPicker.addEventListener("input", (e) => {
                 if (type == "text") {
                     const textElement = element.querySelector("p");
@@ -154,6 +110,29 @@
                 }
             };
             element.appendChild(delete_element);
+
+            let resizer = document.createElement("div");
+            resizer.innerText = "<>";
+            resizer.className = "resizer";
+            element.appendChild(resizer);
+            resizer.addEventListener("mousedown", initResize);
+
+            function initResize(e) {
+                e.stopPropagation(); 
+                window.addEventListener("mousemove", resize);
+                window.addEventListener("mouseup", stopResize);
+            }
+
+            function resize(e) {
+                const rect = element.getBoundingClientRect();
+                element.style.width = (e.clientX - rect.left) + "px";
+                element.style.height = (e.clientY - rect.top) + "px";
+            }
+
+            function stopResize() {
+                window.removeEventListener("mousemove", resize);
+                window.removeEventListener("mouseup", stopResize);
+            }
 
             if (type === "text") {
                 const textElement = document.createElement("p");
@@ -321,11 +300,12 @@
             makeDraggable(element);
         }
 
-        function makeDraggable(element) {
+        function makeDraggable(element, resizer) {
             let isDragging = false;
             let offsetX = 0, offsetY = 0;
 
             element.addEventListener('mousedown', (e) => {
+                if(e.target == resizer) return;                
                 isDragging = true;
                 offsetX = e.clientX - element.offsetLeft;
                 offsetY = e.clientY - element.offsetTop;
@@ -353,55 +333,70 @@
         }
 
         function saveWorkspace() {
-            let elements = document.querySelectorAll(".element");
-            let data = [];
+        let elements = document.querySelectorAll(".element");
+        let data = [];
 
-            elements.forEach(el => {
-                let content;
-                let textColor = "";
+        elements.forEach((el) => {
+            let type = ""; // ✅ Define type for each element
+            let content = "";
+            let textColor = "";
 
-                if (el.classList.contains("list")) {
-                    const items = Array.from(el.querySelectorAll("li")).map(li => ({
-                        text: li.firstChild.textContent.trim(),
-                        checked: li.classList.contains("checked")
-                    }));
-                    content = JSON.stringify(items);
-                } else if (el.classList.contains("text")) {
-                    const textElement = el.querySelector("p");
-                    textColor = textElement.style.color;
-                    content = textElement.innerText;
-                } else {
-                    content = el.innerText;
-                }
+            if (el.classList.contains("text")) {
+                type = "text";
+                const textElement = el.querySelector("p");
+                textColor = textElement.style.color;
+                content = textElement.innerText;
+            } else if (el.classList.contains("list")) {
+                type = "list";
+                const items = Array.from(el.querySelectorAll("li")).map(li => ({
+                    text: li.querySelector(".item-text")?.textContent.trim() || "",
+                    checked: li.classList.contains("checked")
+                }));
+                content = JSON.stringify(items);
+            } else if (el.classList.contains("circle")) {
+                type = "circle";
+            } else if (el.classList.contains("square")) {
+                type = "square";
+            } else if (el.classList.contains("timer")) {
+                type = "timer";
+            }
 
-                data.push({
-                    type: el.classList[1],
-                    top: el.style.top,
-                    left: el.style.left,
-                    content: content,
-                    color: el.style.backgroundColor,
-                    textColor: textColor
-                });
+            data.push({
+                type,
+                top: el.style.top,
+                left: el.style.left,
+                width: el.style.width || null,
+                height: el.style.height || null,
+                content,
+                color: el.style.backgroundColor,
+                textColor
             });
+        });
 
-            localStorage.setItem("workspaceData", JSON.stringify(data));
-        }
+        localStorage.setItem("workspaceData", JSON.stringify(data));
+    }
 
+    function loadWorkspace() {
+        let data = JSON.parse(localStorage.getItem("workspaceData"));
+        if (!data) return;
 
-        function loadWorkspace() {
-            workspace.innerHTML = "";
-            let data = JSON.parse(localStorage.getItem("workspaceData")) || [];
-            data.forEach(item => {
-                addElement(item.type, item.top, item.left, item.content);
-                const element = workspace.querySelector(`.element[style*="top: ${item.top}"]`); // Find the element by position
-                element.style.backgroundColor = item.color;
+        data.forEach((item) => {
+            addElement(item.type, item.top, item.left, item.content);
 
-                if (item.textColor) {
-                    const textElement = element.querySelector("p");
+            const element = workspace.lastChild;
+            element.style.backgroundColor = item.color;
+
+            if (item.textColor && item.type === "text") {
+                const textElement = element.querySelector("p");
+                if (textElement) {
                     textElement.style.color = item.textColor;
                 }
-            });
-        }
+            }
+
+            if (item.width) element.style.width = item.width;
+            if (item.height) element.style.height = item.height;
+        });
+    }
     </script>
 
     <script src="app.js"></script>

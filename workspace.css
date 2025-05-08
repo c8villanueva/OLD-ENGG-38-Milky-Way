@@ -24,7 +24,6 @@
     height: 80px;
     z-index: 1;
     width: 100%;
-    /* max-width: 1300px; */
     margin: 0 auto;
     padding: 0 50px;
     align-items: center;
@@ -188,14 +187,11 @@
     position: absolute;
     top: -0;
     right: -0;
-    background-color: red;
-    color: white;
+    background-color: transparent;
+    color: black;
     border: none;
-    border-radius: 50%;
     width: 20px;
     height: 20px;
-    font-size: 14px;
-    line-height: 20px;
     cursor: pointer;
     z-index: 2;
 }
@@ -205,15 +201,15 @@
   }
 
 .element .delete_element:hover {
-    background-color: darkred;
+    background-color: lightcoral;
 }
 
 .color-picker {
     display: none;
     position: absolute;
     background-color: transparent;
-    bottom: 0;
-    right: -0;
+    top: 0;
+    right: 20px;
     z-index: 2;
     border: none;
     width: 20px;
@@ -225,6 +221,29 @@
     display: block;
 }
 
+.element .color-picker:hover {
+    background-color: #aaa;
+}
+
+.resizer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 20px;
+    width: 20px;
+    cursor: se-resize;
+    background-color: transparent;
+    display: none;
+}
+
+.element:hover .resizer {
+    display: block;
+  }
+
+.element .resizer:hover {
+    background-color: #aaa;
+}
+
 .text, .text p {
     border: none;
     outline: none;
@@ -233,18 +252,12 @@
 }
 
 .square {
-    background: lightgreen;
-    width: 50px;
-    height: 50px;
     border-radius: 0;
     z-index: 0;
     position: relative;
 }
 
 .circle {
-    background: lightgreen;
-    width: 50px;
-    height: 50px;
     border-radius: 100%;
     z-index: 0;
     position: relative;
@@ -256,7 +269,6 @@
 }
 
 .timer-container {
-    /* background: lightcoral; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -264,7 +276,8 @@
     gap: 5px;
     border-radius: 2em;
     padding: 5px;
-    width: 200px;
+    min-width: 200px;
+    min-height: 150px;
 }
 
 .timer-title {
@@ -308,7 +321,6 @@
 
 /* todo list */
 .list {
-    background: lightyellow;
     width: 200px;
     height: 200px;
     overflow-y: auto;
