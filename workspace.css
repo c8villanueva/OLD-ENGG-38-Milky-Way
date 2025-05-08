@@ -266,6 +266,8 @@
 /* timer */
 .timer {
     z-index: 0;
+    min-width: 230px;
+    min-height: 170px;
 }
 
 .timer-container {
@@ -321,10 +323,9 @@
 
 /* todo list */
 .list {
-    width: 200px;
-    height: 200px;
-    overflow-y: auto;
-    position: relative;
+    min-width: 300px;
+    min-height: 300px;
+    overflow: auto;
     z-index: 0;
 }
 
@@ -332,6 +333,8 @@
     list-style-type: none;
     padding: 0;
     margin-top: 10px;
+    min-width: 250px;
+    min-height: 250px;
 }
 
 .todo-list li {
@@ -342,7 +345,8 @@
     background-color: #ddd;
     padding: 5px;
     margin-bottom: 5px;
-    max-width: 200px;
+    min-width: 250px;
+    /* max-width: auto; */
     cursor: pointer;
     position: relative;
     border-radius: 4px;
@@ -354,7 +358,7 @@
     word-break: break-word;
     white-space: normal;
     background-color: transparent;
-    max-width: 150px;
+    /* max-width: 150px; */
 }
 
 .todo-list li.checked .item-text {
